@@ -139,6 +139,7 @@ public class Main {
         System.out.println("c: create car");
         System.out.println("s: show cars");
         System.out.println("d: delete car");
+        System.out.println("e: edit car");
         System.out.println("clear: clear console");
     }
     
