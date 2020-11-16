@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.BufferedInputStream;
 import java.io.InputStreamReader;
 import java.io.Console;
+import java.lang.Runtime;
 /**
  *
  * @author aron
@@ -20,7 +21,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        drawhelp();
         
         CarClass[] cars = {new CarClass()};
         
@@ -30,53 +31,35 @@ public class Main {
                 Scanner userinput = new Scanner(System.in);
                 if (userinput.hasNextLine()){
                     switch(userinput.nextLine()){
-                        case "1":
-                            System.out.println("Yo dude its working yo");
+                        case "h":
+                            drawhelp();
                             break;
-                        case "2":
+                        case "c":
                             CarClass car = new CarClass();
-                            System.out.println("input brand");
-                            Scanner carspecuserinput = new Scanner(System.in);
-                            car.brand = carspecuserinput.nextLine();
-                            
-                            System.out.println("input enginesize");
-                            carspecuserinput = new Scanner(System.in);
-                            car.enginesize = carspecuserinput.nextLine();
-                            
-                            System.out.println("input model");
-                            carspecuserinput = new Scanner(System.in);
-                            car.model = carspecuserinput.nextLine();
-                            
-                            System.out.println("input year");
-                            carspecuserinput = new Scanner(System.in);
-                            car.year = Integer.parseInt(carspecuserinput.nextLine());
-                            
-                            System.out.println("input price");
-                            carspecuserinput = new Scanner(System.in);
-                            car.price = Double.parseDouble(carspecuserinput.nextLine());
-                            
-                            System.out.println("input colour");
-                            carspecuserinput = new Scanner(System.in);
-                            car.colour = carspecuserinput.nextLine();
-                            
-                            cars = UtilMethods.appendArray(cars, car);
-                            
+                            car.inputinit();
+                            cars = UtilMethods.appendArray(cars, car);                           
                             break;
-                        case "3":
-                            //if (!= null){
-                                for(CarClass x : cars){
-                                    System.out.println("test");
-                                    System.out.println(x.toString());
-                                }
-                            //}
+                        case "s":
+                            for(CarClass x : cars){
+                                x.printcontents();
+                            }
+                        case "clear":
+                            //Runtime.getRuntime().exec("clear");
+                            System.out.print("\033[H\033[2J");
                             break;
                         default:
-                            //System.out.println(x);
                             break;
                     }
                 }
             } catch (Exception e){System.out.println(e.toString());}
         }
+    } 
+    //end of main function
+    public static void drawhelp(){
+        System.out.println("h: help");
+        System.out.println("c: create car");
+        System.out.println("s: show cars");
+        System.out.println("clear: clear console");
     }
     
 }
