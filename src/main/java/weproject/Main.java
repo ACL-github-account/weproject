@@ -31,21 +31,41 @@ public class Main {
                 Scanner userinput = new Scanner(System.in);
                 if (userinput.hasNextLine()){
                     switch(userinput.nextLine()){
+                        //display input commandss
                         case "h":
                             drawhelp();
                             break;
+
+                        //Create car object
                         case "c":
-                            CarClass car = new CarClass();
-                            car.inputinit();
-                            cars = UtilMethods.appendArray(cars, car);                           
+                            CarClass inputCar = new CarClass();
+                            inputCar.inputinit();
+                            cars = CarClass.appendCarArray(cars, inputCar);                           
                             break;
+                        
+                        case "cnull":
+                            CarClass nullCar = new CarClass();
+                            nullCar.nullInit();
+                            cars = CarClass.appendCarArray(cars, nullCar); 
+                            break;
+                            
+                        //Delete car object
+                        case "d":
+                            for(CarClass x : cars){
+                                x.printID();
+                            }                            
+                            break;
+                        
+                        //show car object attributes
                         case "s":
                             for(CarClass x : cars){
                                 x.printcontents();
                             }
+                            break;
+                        //clear terminal
                         case "clear":
                             //Runtime.getRuntime().exec("clear");
-                            System.out.print("\033[H\033[2J");
+                            System.out.println("\033[H\033[2J");
                             break;
                         default:
                             break;
@@ -55,6 +75,8 @@ public class Main {
         }
     } 
     //end of main function
+    
+    //user commands
     public static void drawhelp(){
         System.out.println("h: help");
         System.out.println("c: create car");
