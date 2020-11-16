@@ -7,46 +7,68 @@ package weproject;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import static weproject.Main.cars;
 
 /**
  *
  * @author aron
  */
 public class CarClass {
+    
+    //declare attributes
     public String brand, enginesize, model, colour;
     public int year, carID;
     public double price;
-    static int carIDnum = 0; 
+    //static int carIDnum = 0; 
     
+    //assignID on creation
     public CarClass(){
-        this.carID = carIDnum;
-        carIDnum++;
+        this.carID = Main.cars.size();
     }
-    
-    public void inputinit(){
+    //initialise attributes from user input
+    public void brandinit(){
         System.out.println("input brand");
         Scanner carspecuserinput = new Scanner(System.in);
         this.brand = carspecuserinput.nextLine();
-
+    }
+    public void enginesizeinit(){
         System.out.println("input enginesize");
-        carspecuserinput = new Scanner(System.in);
+        Scanner carspecuserinput = new Scanner(System.in);
         this.enginesize = carspecuserinput.nextLine();
-
-        System.out.println("input model");
-        carspecuserinput = new Scanner(System.in);
-        this.model = carspecuserinput.nextLine();
-
+    }    
+    public void yearinit(){
         System.out.println("input year");
-        carspecuserinput = new Scanner(System.in);
-        this.year = Integer.parseInt(carspecuserinput.nextLine());
-
+        Scanner carspecuserinput = new Scanner(System.in);
+        this.year = Integer.parseInt(carspecuserinput.nextLine());        
+    }    
+    public void priceinit(){
         System.out.println("input price");
-        carspecuserinput = new Scanner(System.in);
+        Scanner carspecuserinput = new Scanner(System.in);
         this.price = Double.parseDouble(carspecuserinput.nextLine());
-
+    }    
+    public void colourinit(){
         System.out.println("input colour");
-        carspecuserinput = new Scanner(System.in);
+        Scanner carspecuserinput = new Scanner(System.in);
         this.colour = carspecuserinput.nextLine();
+    }    
+    public void modelinit(){
+        System.out.println("input model");
+        Scanner carspecuserinput = new Scanner(System.in);
+        this.model = carspecuserinput.nextLine();
+    }
+    
+    //--------------------------------------------
+    
+    //initialise variables, calls methods initialising each variable from
+    //input, they are seperate so they may be called individiauly to edit
+    //existing objects
+    public void inputinit(){    
+        brandinit();
+        enginesizeinit();
+        modelinit();
+        colourinit();
+        yearinit();
+        priceinit();
     }
     
     //initialise variables as null, used for fast creation of an object for debug
@@ -60,18 +82,37 @@ public class CarClass {
     }
     /*was in a uniuque utility funtion class, however it was moved due to its inability
     to process other object and variable types, this allows it to be kept with more closer related code*/
-    public static CarClass[] appendCarArray(CarClass[] arr, CarClass apobj){
+    /*public static CarClass[] appendCarArray(CarClass[] arr, CarClass apobj){
         CarClass[] rarr = Arrays.copyOf(arr, arr.length + 1);
         rarr[rarr.length - 1] = apobj;
+        //System.out.println(String.valueOf(rarr.length));
         return rarr;
-    }  
+    } */ 
+    /*public static CarClass[] removeCarObject(CarClass[] arr, int arrIndex){
+        CarClass[] rarr = new CarClass[arr.length - 1];
+        System.out.println(rarr.length);
+        int i = 0, ii = 0;
+        for(CarClass x : arr){
+            if(i != arrIndex){
+               rarr[ii] = x;
+               ii = (ii != i) ? ii++ : i;
+            }
+            i++;
+        }
+        for (CarClass x : rarr){
+            System.out.println(x.carID);
+        }
+        return rarr;
+    }*/
     
+    //printsID's and more human readable attributes on one line.
     public void printID(){
         System.out.print(this.carID + " ");
         System.out.print(this.brand + " ");
         System.out.println(this.model);
     }
     
+    //prints attributes of a car
     public void printcontents(){
         System.out.println("ID:" + this.carID);
         System.out.println("brand: " + this.brand);
@@ -82,4 +123,13 @@ public class CarClass {
         System.out.println("colour: " + this.colour);
         System.out.println();
     }
+    
+    /*function for updateing IDs to remove the numerical gaps between objects*/
+    /*public static void removeIDgaps(){
+        int i = 0;
+        for(CarClass x : cars){
+            x.carID = i;
+            i++;
+        }
+    }*/
 }
