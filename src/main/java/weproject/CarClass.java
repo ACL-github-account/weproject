@@ -16,8 +16,8 @@ import static weproject.Main.cars;
 public class CarClass {
     
     //declare attributes
-    public String brand, enginesize, model, colour;
-    public int year, carID;
+    public String brand, model, colour;
+    public int year, carID, enginesize;
     public double price;
     //static int carIDnum = 0; 
     
@@ -34,30 +34,65 @@ public class CarClass {
     public void brandinit(){
         System.out.println("input brand");
         Scanner carspecuserinput = new Scanner(System.in);
+        System.out.print("brand: ");
         this.brand = carspecuserinput.nextLine();
     }
     public void enginesizeinit(){
         System.out.println("input enginesize");
-        Scanner carspecuserinput = new Scanner(System.in);
-        this.enginesize = carspecuserinput.nextLine();
+        boolean validinput = false;
+        Scanner carspecuserinput;
+        do {
+            System.out.print("enginesize: ");
+            carspecuserinput = new Scanner(System.in);
+            try{
+                this.year = Integer.parseInt(carspecuserinput.nextLine()); 
+                validinput = true;
+            } catch(NumberFormatException e) {
+                System.out.println("Not an integer, please try again.");
+            }
+        } while(validinput == false); 
     }    
     public void yearinit(){
         System.out.println("input year");
-        Scanner carspecuserinput = new Scanner(System.in);
-        this.year = Integer.parseInt(carspecuserinput.nextLine());        
+        
+        boolean validinput = false;
+        Scanner carspecuserinput;
+        do {
+            System.out.print("year: ");
+            carspecuserinput = new Scanner(System.in);
+            try{
+                this.year = Integer.parseInt(carspecuserinput.nextLine()); 
+                validinput = true;
+            } catch(NumberFormatException e) {
+                System.out.println("Not an integer, please try again.");
+            }
+        } while(validinput == false);       
     }    
     public void priceinit(){
         System.out.println("input price");
-        Scanner carspecuserinput = new Scanner(System.in);
-        this.price = Double.parseDouble(carspecuserinput.nextLine());
+        boolean validinput = false;
+        Scanner carspecuserinput;
+        do {
+            System.out.print("price: £");
+            carspecuserinput = new Scanner(System.in);
+            try{
+                this.price = Double.parseDouble(carspecuserinput.nextLine());
+                validinput = true;
+            } catch(NumberFormatException e) {
+                System.out.println("Not a double, please try again.");
+            }
+            //System.out.println(validinput);
+        } while(validinput == false);
     }    
     public void colourinit(){
         System.out.println("input colour");
+        System.out.print("colour:");
         Scanner carspecuserinput = new Scanner(System.in);
         this.colour = carspecuserinput.nextLine();
     }    
     public void modelinit(){
         System.out.println("input model");
+        System.out.print("model: ");
         Scanner carspecuserinput = new Scanner(System.in);
         this.model = carspecuserinput.nextLine();
     }
@@ -80,7 +115,7 @@ public class CarClass {
     //initialise variables as null, used for fast creation of an object for debug
     public void nullInit(){
         this.brand = null;
-        this.enginesize = null;
+        this.enginesize = 0;
         this.model = null;
         this.colour = null;
         this.year = 0;
@@ -122,10 +157,10 @@ public class CarClass {
     public void printcontents(){
         System.out.println("ID:" + this.carID);
         System.out.println("brand: " + this.brand);
-        System.out.println("enginesize: " + this.enginesize);
+        System.out.println("enginesize: " + this.enginesize + "cc");
         System.out.println("model: " + this.model);
         System.out.println("year: " + this.year);
-        System.out.println("price: " + this.price);
+        System.out.println("price: £" + this.price);
         System.out.println("colour: " + this.colour);
         System.out.println();
     }
