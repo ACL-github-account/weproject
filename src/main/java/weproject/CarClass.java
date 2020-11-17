@@ -21,6 +21,11 @@ public class CarClass {
     public double price;
     //static int carIDnum = 0; 
     
+    //to be used by other classes for listing CarClass attributes.
+    public static enum attributelist{
+        brand, enginesize, model, colour, year, carID, price;
+    }
+    
     //assignID on creation
     public CarClass(){
         this.carID = Main.cars.size();
@@ -58,6 +63,7 @@ public class CarClass {
     }
     
     //--------------------------------------------
+    
     
     //initialise variables, calls methods initialising each variable from
     //input, they are seperate so they may be called individiauly to edit
