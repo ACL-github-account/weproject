@@ -30,6 +30,58 @@ public class CarClass {
     public CarClass(){
         this.carID = Main.cars.size();
     }
+    
+    //------------------------------------------------
+    //   INPUT CONVERSION AND VALIDATION FUNCTIONS
+    //-------------------------------------------------
+    public static int inputInt(String inputFieldName){
+        //IF INPUT THROWS NOT EXCEPTION THIS BECOMES TRUE TO BREAK LOOP
+        boolean validinput = false;
+        //RETURN VALUE
+        int returnVal = -1;
+        
+        
+        Scanner carspecuserinput;
+        do {
+            System.out.print(inputFieldName);
+            carspecuserinput = new Scanner(System.in);
+            try{
+                returnVal = Integer.parseInt(carspecuserinput.nextLine()); 
+                validinput = true;
+            } catch(NumberFormatException e) {
+                System.out.println("Not an integer, please try again.");
+            }
+        } while(validinput == false);
+        return returnVal;
+    }
+    public static double inputDouble(String inputFieldName){
+        //IF INPUT THROWS NOT EXCEPTION THIS BECOMES TRUE TO BREAK LOOP
+        boolean validinput = false;
+        //RETURN VALUE
+        double returnVal = -1;
+        
+        
+        Scanner carspecuserinput;
+        do {
+            System.out.print(inputFieldName);
+            carspecuserinput = new Scanner(System.in);
+            try{
+                returnVal = Double.parseDouble(carspecuserinput.nextLine()); 
+                validinput = true;
+            } catch(NumberFormatException e) {
+                System.out.println("Not an integer, please try again.");
+            }
+        } while(validinput == false);
+        return returnVal;
+    }
+    
+    
+    //------------------------------------------------
+    //------------------------------------------------
+    
+    //------------------------------------------------
+    //          INITIALIZATION METHODS
+    //-------------------------------------------------
     //initialise attributes from user input
     public void brandinit(){
         System.out.println("input brand");
@@ -39,50 +91,15 @@ public class CarClass {
     }
     public void enginesizeinit(){
         System.out.println("input enginesize");
-        boolean validinput = false;
-        Scanner carspecuserinput;
-        do {
-            System.out.print("enginesize: ");
-            carspecuserinput = new Scanner(System.in);
-            try{
-                this.year = Integer.parseInt(carspecuserinput.nextLine()); 
-                validinput = true;
-            } catch(NumberFormatException e) {
-                System.out.println("Not an integer, please try again.");
-            }
-        } while(validinput == false); 
+        this.enginesize = inputInt("size: ");
     }    
     public void yearinit(){
         System.out.println("input year");
-        
-        boolean validinput = false;
-        Scanner carspecuserinput;
-        do {
-            System.out.print("year: ");
-            carspecuserinput = new Scanner(System.in);
-            try{
-                this.year = Integer.parseInt(carspecuserinput.nextLine()); 
-                validinput = true;
-            } catch(NumberFormatException e) {
-                System.out.println("Not an integer, please try again.");
-            }
-        } while(validinput == false);       
+        this.year = inputInt("year: ");     
     }    
     public void priceinit(){
         System.out.println("input price");
-        boolean validinput = false;
-        Scanner carspecuserinput;
-        do {
-            System.out.print("price: £");
-            carspecuserinput = new Scanner(System.in);
-            try{
-                this.price = Double.parseDouble(carspecuserinput.nextLine());
-                validinput = true;
-            } catch(NumberFormatException e) {
-                System.out.println("Not a double, please try again.");
-            }
-            //System.out.println(validinput);
-        } while(validinput == false);
+        this.price = inputDouble("price: ");
     }    
     public void colourinit(){
         System.out.println("input colour");
@@ -97,7 +114,8 @@ public class CarClass {
         this.model = carspecuserinput.nextLine();
     }
     
-    //--------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
     
     
     //initialise variables, calls methods initialising each variable from
@@ -121,30 +139,6 @@ public class CarClass {
         this.year = 0;
         this.price = 0.00;
     }
-    /*was in a uniuque utility funtion class, however it was moved due to its inability
-    to process other object and variable types, this allows it to be kept with more closer related code*/
-    /*public static CarClass[] appendCarArray(CarClass[] arr, CarClass apobj){
-        CarClass[] rarr = Arrays.copyOf(arr, arr.length + 1);
-        rarr[rarr.length - 1] = apobj;
-        //System.out.println(String.valueOf(rarr.length));
-        return rarr;
-    } */ 
-    /*public static CarClass[] removeCarObject(CarClass[] arr, int arrIndex){
-        CarClass[] rarr = new CarClass[arr.length - 1];
-        System.out.println(rarr.length);
-        int i = 0, ii = 0;
-        for(CarClass x : arr){
-            if(i != arrIndex){
-               rarr[ii] = x;
-               ii = (ii != i) ? ii++ : i;
-            }
-            i++;
-        }
-        for (CarClass x : rarr){
-            System.out.println(x.carID);
-        }
-        return rarr;
-    }*/
     
     //printsID's and more human readable attributes on one line.
     public void printID(){
@@ -164,13 +158,4 @@ public class CarClass {
         System.out.println("colour: " + this.colour);
         System.out.println();
     }
-    
-    /*function for updateing IDs to remove the numerical gaps between objects*/
-    /*public static void removeIDgaps(){
-        int i = 0;
-        for(CarClass x : cars){
-            x.carID = i;
-            i++;
-        }
-    }*/
 }

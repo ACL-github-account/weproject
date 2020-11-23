@@ -23,6 +23,7 @@ public class search {
             System.out.println(x);
         }
         String user_input = scanner.nextLine();
+        System.out.println("SEARCH:");
 
         switch(CarClass.attributelist.valueOf(user_input)){
             case brand:
@@ -70,7 +71,7 @@ public class search {
                     }
                 }
                 break;
-            case carID:                                             System.out.println("SEARCH:");
+            case carID:                                             
                 searchinput = new Scanner(System.in);
                 for(CarClass x : cars){
                     if(String.valueOf(x.carID).indexOf(searchinput.nextLine()) != -1){
