@@ -108,6 +108,28 @@ public class CarClass implements Externalizable{
         return returnVal;
     }
     
+    public static String inputStr(String inputFieldName){
+        //IF INPUT THROWS NOT EXCEPTION THIS BECOMES TRUE TO BREAK LOOP
+        boolean validinput = false;
+        //RETURN VALUE
+        String returnVal = "";
+        
+        
+        Scanner carspecuserinput;
+        do {
+            System.out.print(inputFieldName);
+            carspecuserinput = new Scanner(System.in);
+            String input = carspecuserinput.nextLine();
+            if (!input.isEmpty()){
+                returnVal = input;
+                validinput = true;
+            } else {
+                System.out.println("no empty strings are allowed");
+            }
+        } while(validinput == false);
+        return returnVal;
+    }
+    
     
     //------------------------------------------------
     //------------------------------------------------
@@ -118,9 +140,7 @@ public class CarClass implements Externalizable{
     //initialise attributes from user input
     public void brandinit(){
         System.out.println("input brand");
-        Scanner carspecuserinput = new Scanner(System.in);
-        System.out.print("brand: ");
-        this.brand = carspecuserinput.nextLine();
+        this.brand = inputStr("brand: ");
     }
     public void enginesizeinit(){
         System.out.println("input enginesize");
@@ -136,15 +156,11 @@ public class CarClass implements Externalizable{
     }    
     public void colourinit(){
         System.out.println("input colour");
-        System.out.print("colour:");
-        Scanner carspecuserinput = new Scanner(System.in);
-        this.colour = carspecuserinput.nextLine();
+        this.colour = inputStr("colour: ");
     }    
     public void modelinit(){
         System.out.println("input model");
-        System.out.print("model: ");
-        Scanner carspecuserinput = new Scanner(System.in);
-        this.model = carspecuserinput.nextLine();
+        this.model = inputStr("model: ");
     }
     
     //-------------------------------------------------
@@ -165,10 +181,10 @@ public class CarClass implements Externalizable{
     
     //initialise variables as null, used for fast creation of an object for debug
     public void noneInit(){
-        this.brand = "";
+        this.brand = "s";
         this.enginesize = 0;
-        this.model = "";
-        this.colour = "";
+        this.model = "s";
+        this.colour = "s";
         this.year = 0;
         this.price = 0.00;
     }
