@@ -27,7 +27,7 @@ public class edit {
         //input array index
         System.out.println("INPUT INDEX");
         //Scanner scanner = Main.scanner;
-        CarClass editCar = cars.get(Integer.parseInt(scanner.nextLine()));
+        CarClass editCar = cars.get(CarClass.inputInt("Index:"));
 
         //input attribute
         System.out.println("Input Attribute:");
@@ -54,6 +54,8 @@ public class edit {
             break;
             case colour:
                 editCar.colourinit();
+            break;
+            default:
             break;
         }
     }

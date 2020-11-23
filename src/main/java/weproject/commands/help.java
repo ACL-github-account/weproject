@@ -17,6 +17,7 @@ public class help {
         System.out.println("s: search for cars");
         System.out.println("d: delete car");
         System.out.println("e: edit car");
+        System.out.println("SAVE: save car list");
         System.out.println("clear: clear console");
     }
 }

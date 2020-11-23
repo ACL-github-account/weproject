@@ -39,6 +39,12 @@ public class Main {
      */
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         //draw inputs for user
+        help.Help();
+        
+        //-----READ CONFIG------
+        //----------------------
+        
+        //-----LOAD SAVED DATA-----
         File dataFile = new File(filename);
         if(dataFile.exists()){
                 FileInputStream fistream = new FileInputStream(dataFile);
@@ -59,13 +65,6 @@ public class Main {
                     }
                 }
         }
-        help.Help();
-        
-        //-----READ CONFIG------
-        //----------------------
-        
-        //-----LOAD SAVED DATA-----
-
         //-------------------------
         
         //-----------------------------------------------------------------
