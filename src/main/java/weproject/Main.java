@@ -12,6 +12,16 @@ import java.io.InputStreamReader;
 import java.io.Console;
 import java.lang.Runtime;
 import java.util.ArrayList;
+import java.io.Externalizable;
+import java.io.ObjectInput;
+import java.nio.file.Files;
+import java.io.File;
+import java.nio.file.Paths;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import weproject.commands.*;
 /**
  *
  * @author aron
@@ -19,57 +29,79 @@ import java.util.ArrayList;
 public class Main {
     //where car objects are stored
     public static ArrayList<CarClass> cars = new ArrayList<CarClass>();
+    public static Scanner scanner;
+    
 
+    //for now save location is hardcoded
+    public static final String filename = "./carData.ser";
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, IOException {
         //draw inputs for user
-        drawhelp();
+        help.Help();
+        
+        //-----READ CONFIG------
+        //----------------------
+        
+        //-----LOAD SAVED DATA-----
+        File dataFile = new File(filename);
+        if(dataFile.exists()){
+                FileInputStream fistream = new FileInputStream(dataFile);
+                ArrayList<Object> ObjectsList = new ArrayList<>();
+                boolean cont = true;
+                
+                while (cont){
+                    try{
+                    ObjectInputStream inp = new ObjectInputStream(fistream);
+                    Object obj = inp.readObject();
+                    if (obj != null){
+                        ObjectsList.add(obj);
+                    } else {
+                            cont = false;
+                        }
+                    } catch(EOFException e){
+                        break;
+                    }
+                }
+        }
+        //-------------------------
+        
+        //-----------------------------------------------------------------
+        //                  TERMINAL USER INTERFACE
+        //-----------------------------------------------------------------
         //program does not stop
         while(true){
-            try{                
-                Scanner userinput = new Scanner(System.in);
-                if (userinput.hasNextLine()){
+            try{               
+                scanner = new Scanner(System.in);
+                if (scanner.hasNextLine()){
                     //input processing
-                    //TODO: implement an an enumerator to make this look better, 
-                    switch(userinput.nextLine()){
+                    switch(scanner.nextLine()){
                         //display input commandss
                         case "h":
-                            drawhelp();
+                            help.Help();
                             break;
 
                         //Create car object
                         case "c":
                             CarClass inputCar = new CarClass();
                             inputCar.inputinit();
-                            //cars = CarClass.appendCarArray(cars, inputCar); 
                             cars.add(inputCar);
                             break;
                         
-                        case "cnull":
-                            CarClass nullCar = new CarClass();
-                            nullCar.nullInit();
-                            //cars = CarClass.appendCarArray(cars, nullCar); 
-                            cars.add(nullCar);
+                        case "cn":
+                            CarClass noneCar = new CarClass();
+                            noneCar.noneInit();
+                            cars.add(noneCar);
                             break;
                             
                         //Delete car object
                         case "d":
-                            System.out.println("PLEASE TYPE THE INDEX OF THE CAR YOU WANT TO DELETE:");
-                            int i = 0;
-                            for(CarClass x : cars){
-                                System.out.print(String.valueOf(i) + ": ");
-                                x.printID();
-                                i++;
-                            }
-                            Scanner dinput = new Scanner(System.in);
-                            cars.remove(Integer.parseInt(dinput.nextLine()));
-                            //cars = CarClass.removeCarObject(cars, Integer.parseInt(dinput.nextLine()));
+                            delete.Delete();
                             break;
                         
                         //show car object attributes
-                        case "s":
+                        case "p":
                             for(CarClass x : cars){
                                 x.printcontents();
                             }
@@ -77,48 +109,19 @@ public class Main {
                             
                         //edit object
                         case "e":
-                            //print objects with an itterator for aray index refrence
-                            int l = 0;
-                            for(CarClass x : cars){
-                                System.out.print(String.valueOf(l) + ": ");
-                                x.printID();
-                                l++;
-                            }
-                            
-                            //input array index
-                            System.out.println("INPUT INDEX");
-                            Scanner editScanner = new Scanner(System.in);
-                            CarClass editCar = cars.get(Integer.parseInt(editScanner.nextLine()));
-                            
-                            //input attribute
-                            System.out.println("Input Attribute:");
-                            System.out.println("brand, enginesize, model, year, price, colour");
-                            Scanner editAttributeScanner = new Scanner(System.in);
-                            
-                            //execute functions depending on input
-                            //TODO: implement an an enumerator to make this look better
-                            switch(editAttributeScanner.nextLine()){
-                                case "brand":
-                                    editCar.brandinit();
-                                break;
-                                case "enginesize":
-                                    editCar.enginesizeinit();
-                                break;
-                                case "model":
-                                    editCar.modelinit();
-                                break;
-                                case "year":
-                                    editCar.yearinit();
-                                break;
-                                case "price":
-                                    editCar.priceinit();
-                                break;
-                                case "colour":
-                                    editCar.colourinit();
-                                break;
-                            }
+                            edit.Edit();
+                            break;
+                        
+                        //search object
+                        case "s":
+                            search.Search();
                             break;
                             
+                        //use externalizable to serialize cars object    
+                        case "SAVE":
+                            save.save();
+                            break;
+                        
                         //clear terminal
                         case "clear":
                             System.out.println("\033[H\033[2J");
@@ -129,18 +132,7 @@ public class Main {
                 }
             } catch (Exception e){System.out.println(e.toString());}
         }
+        //-----------------------------------------------
     } 
     //end of main function
-    
-    //user commands
-    //TODO: create a class for storeing these command names and definitions
-    public static void drawhelp(){
-        System.out.println("h: help");
-        System.out.println("c: create car");
-        System.out.println("s: show cars");
-        System.out.println("d: delete car");
-        System.out.println("e: edit car");
-        System.out.println("clear: clear console");
-    }
-    
 }
