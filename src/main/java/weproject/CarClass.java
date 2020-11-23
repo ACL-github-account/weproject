@@ -7,13 +7,17 @@ package weproject;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.Externalizable;
+import java.io.ObjectOutput;
+import java.io.ObjectInput;
+import java.io.IOException;
 import static weproject.Main.cars;
 
 /**
  *
  * @author aron
  */
-public class CarClass {
+public class CarClass implements Externalizable{
     
     //declare attributes
     public String brand, model, colour;
@@ -31,6 +35,35 @@ public class CarClass {
         this.carID = Main.cars.size();
     }
     
+    //------------------------------------------------
+    //      EXTERNALIZABLE OVEERRIDES
+    //------------------------------------------------
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException{
+        out.writeObject(this);
+        out.writeDouble(this.price);
+        out.writeUTF(this.brand);
+        out.writeUTF(this.model);
+        out.writeUTF(this.colour);
+        out.writeInt(this.year);
+        out.writeInt(this.carID);
+        out.writeInt(this.enginesize);
+    }
+    
+    @Override
+    public void readExternal(ObjectInput in)
+        throws ClassNotFoundException, IOException{
+        CarClass loadedcar = (CarClass) in.readObject();        
+        loadedcar.price = in.readDouble();
+        loadedcar.brand = in.readUTF();
+        loadedcar.model = in.readUTF();
+        loadedcar.colour = in.readUTF();
+        loadedcar.year = in.readInt();
+        loadedcar.carID = in.readInt();
+        loadedcar.enginesize = in.readInt();
+        Main.cars.add(loadedcar);
+    }
+    //------------------------------------------------
     //------------------------------------------------
     //   INPUT CONVERSION AND VALIDATION FUNCTIONS
     //-------------------------------------------------
@@ -131,11 +164,11 @@ public class CarClass {
     }
     
     //initialise variables as null, used for fast creation of an object for debug
-    public void nullInit(){
-        this.brand = null;
+    public void noneInit(){
+        this.brand = "";
         this.enginesize = 0;
-        this.model = null;
-        this.colour = null;
+        this.model = "";
+        this.colour = "";
         this.year = 0;
         this.price = 0.00;
     }

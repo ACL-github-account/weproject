@@ -12,7 +12,15 @@ import java.io.InputStreamReader;
 import java.io.Console;
 import java.lang.Runtime;
 import java.util.ArrayList;
-
+import java.io.Externalizable;
+import java.io.ObjectInput;
+import java.nio.file.Files;
+import java.io.File;
+import java.nio.file.Paths;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.EOFException;
+import java.io.IOException;
 import weproject.commands.*;
 /**
  *
@@ -22,18 +30,50 @@ public class Main {
     //where car objects are stored
     public static ArrayList<CarClass> cars = new ArrayList<CarClass>();
     public static Scanner scanner;
+    
 
+    //for now save location is hardcoded
+    public static final String filename = "./carData.ser";
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, IOException {
         //draw inputs for user
+        File dataFile = new File(filename);
+        if(dataFile.exists()){
+                FileInputStream fistream = new FileInputStream(dataFile);
+                ArrayList<Object> ObjectsList = new ArrayList<>();
+                boolean cont = true;
+                
+                while (cont){
+                    try{
+                    ObjectInputStream inp = new ObjectInputStream(fistream);
+                    Object obj = inp.readObject();
+                    if (obj != null){
+                        ObjectsList.add(obj);
+                    } else {
+                            cont = false;
+                        }
+                    } catch(EOFException e){
+                        break;
+                    }
+                }
+        }
         help.Help();
-        //for reading user input
         
+        //-----READ CONFIG------
+        //----------------------
+        
+        //-----LOAD SAVED DATA-----
+
+        //-------------------------
+        
+        //-----------------------------------------------------------------
+        //                  TERMINAL USER INTERFACE
+        //-----------------------------------------------------------------
         //program does not stop
         while(true){
-            try{                
+            try{               
                 scanner = new Scanner(System.in);
                 if (scanner.hasNextLine()){
                     //input processing
@@ -50,10 +90,10 @@ public class Main {
                             cars.add(inputCar);
                             break;
                         
-                        case "cnull":
-                            CarClass nullCar = new CarClass();
-                            nullCar.nullInit();
-                            cars.add(nullCar);
+                        case "cn":
+                            CarClass noneCar = new CarClass();
+                            noneCar.noneInit();
+                            cars.add(noneCar);
                             break;
                             
                         //Delete car object
@@ -72,9 +112,15 @@ public class Main {
                         case "e":
                             edit.Edit();
                             break;
-                            
+                        
+                        //search object
                         case "s":
                             search.Search();
+                            break;
+                            
+                        //use externalizable to serialize cars object    
+                        case "SAVE":
+                            save.save();
                             break;
                         
                         //clear terminal
@@ -87,6 +133,7 @@ public class Main {
                 }
             } catch (Exception e){System.out.println(e.toString());}
         }
+        //-----------------------------------------------
     } 
     //end of main function
 }
