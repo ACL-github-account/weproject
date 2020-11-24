@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact name="weproject:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/weproject_jar</output-path>
+    <root id="root">
+      <element id="archive" name="weproject.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="weproject.main" />
+      </element>
+      <element id="library" level="project" name="Gradle: org.hamcrest:hamcrest-core:1.3" />
+      <element id="library" level="project" name="Gradle: junit:junit:4.13" />
+    </root>
+  </artifact>
+</component>
