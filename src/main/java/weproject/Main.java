@@ -13,6 +13,9 @@ import java.io.ObjectInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import weproject.commands.*;
+import weproject.ui.*;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 /**
@@ -23,12 +26,11 @@ public class Main {
     //where car objects are stored
     public static ArrayList<CarClass> cars = new ArrayList<CarClass>();
     public static Scanner scanner;
-    
-    public static Frame myFrame = new Frame("CarsDatabase");
+
     //for now save location is hardcoded
     public static final String filename = "./carData.ser";
 
-    enum commandEnum{
+    public enum commandEnum{
         help, createCar, printCars, search, delete, edit, SAVE, clear
     }
     /**
@@ -45,7 +47,6 @@ public class Main {
             FileInputStream fistream = new FileInputStream(dataFile);
             ArrayList<Object> ObjectsList = new ArrayList<>();
             boolean cont = true;
-
             while (cont){
                 try{
                     ObjectInputStream inp = new ObjectInputStream(fistream);
@@ -61,6 +62,7 @@ public class Main {
             }
         }
         //-------------------------
+        //convert last argument to string
         String argument = " ";
         for (String x : args){
             argument = x;
@@ -69,81 +71,9 @@ public class Main {
         //Graphical Interface
 
         if (!argument.equals("--Term")) {
-            myFrame.setMinimumSize(new Dimension(65,350));
-            myFrame.setMaximumSize(new Dimension(65,350));
-
-            myFrame.setLayout(new FlowLayout());
-            Button[] buttons = new Button[commandEnum.values().length];
-
-            //Button Creation
-            int i = 0;
-            for(commandEnum x : commandEnum.values()){
-                buttons[i] = (Button) myFrame.add(new Button(commandEnum.values()[i].toString()));
-                i++;
-            }
-            //buttons[0] = (Button) myFrame.add(new Button("Help"));
-            //buttons[1] = (Button) myFrame.add(new Button("Create Car"));
-            //Button Event Listeners
-            // 0=help, 1=createCar, 2=printCars, 3=search, 4=delete, 5=edit, 6=SAVE, 7=clear
-            buttons[0].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    help.Help();
-                }
-            });
-            buttons[1].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    CarClass inputCar = new CarClass();
-                    inputCar.inputinit();
-                    cars.add(inputCar);
-                }
-            });
-            buttons[2].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    for (CarClass x : cars) {
-                        x.printcontents();
-                    }
-                }
-            });
-            buttons[3].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    search.Search();
-                }
-            });
-            buttons[4].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    delete.Delete();
-                }
-            });
-            buttons[5].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    edit.Edit();
-                }
-            });
-            buttons[6].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    save.save();
-                }
-            });
-            buttons[7].addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    System.out.println("\033[H\033[2J");
-                }
-            });
-
-
-
-            myFrame.setVisible(true);
-
-            //terminal UI
+            uiMain.GUI();
         }
+        //terminal UI
         if(argument.equals("--Term") || argument.equals("--GUI-Term")){
             //draw inputs for user
             help.Help();

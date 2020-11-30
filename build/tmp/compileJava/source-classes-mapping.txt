@@ -1,10 +1,24 @@
 weproject/Main.java
  weproject.Main
+ weproject.Main$commandEnum
+weproject/ui/carsData.java
+ weproject.ui.carsData
+ weproject.ui.carsData$1
 weproject/commands/delete.java
  weproject.commands.delete
 weproject/commands/edit.java
  weproject.commands.edit
  weproject.commands.edit$1
+weproject/ui/uiMain.java
+ weproject.ui.uiMain
+ weproject.ui.uiMain$1
+ weproject.ui.uiMain$2
+ weproject.ui.uiMain$3
+ weproject.ui.uiMain$4
+ weproject.ui.uiMain$5
+ weproject.ui.uiMain$6
+ weproject.ui.uiMain$7
+ weproject.ui.uiMain$8
 weproject/commands/save.java
  weproject.commands.save
 weproject/commands/search.java

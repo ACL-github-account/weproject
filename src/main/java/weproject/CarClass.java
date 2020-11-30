@@ -27,7 +27,7 @@ public class CarClass implements Externalizable{
     
     //to be used by other classes for listing CarClass attributes.
     public static enum attributelist{
-        brand, enginesize, model, colour, year, carID, price;
+        carID, brand, enginesize, model, colour, year, price;
     }
     
     //assignID on creation
