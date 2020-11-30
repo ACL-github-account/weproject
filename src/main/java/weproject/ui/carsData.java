@@ -16,51 +16,36 @@ public class carsData {
         mainPanel.setBackground(Color.BLACK);
         mainPanelConstraint.weightx = 1;
         mainPanelConstraint.weighty = 1;
-        mainPanelConstraint.anchor = GridBagConstraints.LINE_END;
+        mainPanelConstraint.gridy = 0;
+        mainPanelConstraint.anchor = GridBagConstraints.ABOVE_BASELINE;
         mainPanelConstraint.fill = GridBagConstraints.BOTH;
 
-        //Title
-        GridBagConstraints TitleConstraint = new GridBagConstraints();
-        TitleConstraint.gridy = 0;
-        TitleConstraint.weighty = 0;
-        TitleConstraint.weightx = 1;
-        TitleConstraint.fill = GridBagConstraints.HORIZONTAL;
-        TitleConstraint.anchor = GridBagConstraints.ABOVE_BASELINE;
-        Panel titlePanel = new Panel((new FlowLayout()));
-        titlePanel.setBackground(Color.darkGray);
-        titlePanel.add(new Label("Cars"));
-        mainPanel.add(titlePanel, TitleConstraint);
 
         Panel mainPanelContent = new Panel(new GridBagLayout());
         GridBagConstraints contentConstraint = new GridBagConstraints();
         contentConstraint.gridy = 1;
         contentConstraint.weighty = 1;
         contentConstraint.weightx = 1;
-        contentConstraint.fill = GridBagConstraints.HORIZONTAL;
-        contentConstraint.anchor = GridBagConstraints.BELOW_BASELINE;
+        contentConstraint.fill = GridBagConstraints.BOTH;
 
-        Panel attributePanel = new Panel(new GridBagLayout());
+        Panel attributePanel = new Panel(new GridLayout(1, CarClass.attributelist.values().length));
         GridBagConstraints attributePanelConstraints = new GridBagConstraints();
-        attributePanelConstraints.gridy = 1;
         attributePanelConstraints.weighty = 1;
         attributePanelConstraints.weightx = 1;
         int i = 0;
         for (CarClass.attributelist x : CarClass.attributelist.values()) {
             attributePanelConstraints.gridx = i;
-            Button newLabel = new Button(CarClass.attributelist.values()[i].toString());
+            Label newLabel = new Label(CarClass.attributelist.values()[i].toString());
             newLabel.setBackground(Color.lightGray);
             attributePanel.add(newLabel, attributePanelConstraints);
             i++;
         }
         attributePanelConstraints.fill = GridBagConstraints.BOTH;
-        attributePanelConstraints.ipady = 1;
-        attributePanelConstraints.anchor = GridBagConstraints.ABOVE_BASELINE;
         mainPanelContent.add(attributePanel, attributePanelConstraints);
         i = 2;
 
 
         for (CarClass x : Main.cars) {
-            attributePanelConstraints.anchor = GridBagConstraints.BASELINE;
             attributePanelConstraints.gridy = i;
             Panel newPanel = new Panel(new GridLayout(1, CarClass.attributelist.values().length));
             int f = 0;
@@ -71,7 +56,7 @@ public class carsData {
                         newPanel.add(new TextField(x.brand), attributePanelConstraints);
                         break;
                     case carID:
-                        newPanel.add(new TextField(x.carID), attributePanelConstraints);
+                        newPanel.add(new TextField(String.valueOf(x.carID)), attributePanelConstraints);
                         break;
                     case colour:
                         newPanel.add(new TextField(x.colour), attributePanelConstraints);
@@ -86,17 +71,13 @@ public class carsData {
                         newPanel.add(new TextField(String.valueOf(x.price)), attributePanelConstraints);
                         break;
                     case year:
-                        newPanel.add(new TextField(x.year), attributePanelConstraints);
+                        newPanel.add(new TextField(String.valueOf(x.year)), attributePanelConstraints);
                         break;
                     default:
                         break;
                 }
                 f++;
             }
-            //attributePanelConstraints.fill = GridBagConstraints.BOTH;
-            //attributePanelConstraints.weighty = 1;
-            //attributePanelConstraints.weightx = 1;
-            //attributePanelConstraints.ipadx = myFrame.getSize().width;
             mainPanelContent.add(newPanel, attributePanelConstraints);
             i++;
         }
