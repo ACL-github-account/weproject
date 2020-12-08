@@ -71,7 +71,7 @@ public class carsData {
                 _CONTENT_COUNT++;
             }
         }
-        System.out.println(_CONTENT_COUNT);
+        //System.out.println(_CONTENT_COUNT);
 
         int i = 2;
         int _ROW_COUNT = myFrame.getHeight()/30;
@@ -103,37 +103,61 @@ public class carsData {
                     switch (attributeIndex) {
                         case 0:
                             if (String.valueOf(x.carID).indexOf(attributeValue) == -1) {
+                                System.out.print(x.carID);
+                                mainPanelContent.getComponent(ii+1).setVisible(false);
+                                //System.out.println("-"+ii+"-"+((TextField)((Panel)mainPanelContent.getComponent(ii+1)).getComponent(0)).getText());
+                                mainPanelContent.validate();
                                 skipPanel = true;
+                            } else {
+                                mainPanelContent.getComponent(ii+1).setVisible(true);
                             }
                             break;
                         case 1:
                             if (x.brand.indexOf(attributeValue) == -1) {
+                                mainPanelContent.getComponent(ii+1).setVisible(false);
                                 skipPanel = true;
+                            } else {
+                                mainPanelContent.getComponent(ii+1).setVisible(true);
                             }
                             break;
                         case 2:
                             if (String.valueOf(x.enginesize).indexOf(attributeValue) == -1) {
+                                mainPanelContent.getComponent(ii+1).setVisible(false);
                                 skipPanel = true;
+                            } else {
+                                mainPanelContent.getComponent(ii+1).setVisible(true);
                             }
                             break;
                         case 3:
                             if (x.model.indexOf(attributeValue) == -1) {
+                                mainPanelContent.getComponent(ii+1).setVisible(false);
                                 skipPanel = true;
+                            } else {
+                                mainPanelContent.getComponent(ii+1).setVisible(true);
                             }
                             break;
                         case 4:
                             if (x.colour.indexOf(attributeValue) == -1) {
+                                mainPanelContent.getComponent(ii+1).setVisible(false);
                                 skipPanel = true;
+                            } else {
+                                mainPanelContent.getComponent(ii+1).setVisible(true);
                             }
                             break;
                         case 5:
                             if (String.valueOf(x.year).indexOf(attributeValue) == -1) {
+                                mainPanelContent.getComponent(ii+1).setVisible(false);
                                 skipPanel = true;
+                            } else {
+                                mainPanelContent.getComponent(ii+1).setVisible(true);
                             }
                             break;
                         case 6:
                             if (String.valueOf(x.price).indexOf(attributeValue) == -1) {
+                                mainPanelContent.getComponent(ii+1).setVisible(false);
                                 skipPanel = true;
+                            } else {
+                                mainPanelContent.getComponent(ii+1).setVisible(true);
                             }
                             break;
                         default:
@@ -150,7 +174,6 @@ public class carsData {
                     attributePanelConstraints.gridx = f;
                     panelAtRow = (Panel) mainPanelContent.getComponent(ii + 1);
                     panelAtRow.setName("CONTENT");
-                    //panelAtRow.setName("CONTENT");
                     switch (y) {
                         case brand:
                             panelText = (TextField) panelAtRow.getComponent(CarClass.attributelist.brand.ordinal());

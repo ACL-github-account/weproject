@@ -143,6 +143,7 @@ public class uiMain{
         searchByEngineSize.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
+
                 currentActionID = 1;
                 currentAttributeIndex = 2;
                 currentAttributeValue = searchByEngineSizeField.getText();
