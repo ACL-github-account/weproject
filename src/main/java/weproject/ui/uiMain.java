@@ -27,7 +27,7 @@ public class uiMain{
         // MAIN PANNELS
         //--------------------
         //ButtonsPanel
-        Panel buttonPanel = new Panel(new GridLayout(0 ,1));
+        Panel buttonPanel = new Panel(new GridBagLayout());
         buttonPanel.setBackground(Color.gray);
         GridBagConstraints buttonsConstraint = new GridBagConstraints();
         buttonsConstraint.fill = GridBagConstraints.VERTICAL;
@@ -39,25 +39,41 @@ public class uiMain{
 
         //main pannel
         //cars data
-        carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
+        //carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
+        carsData.initializeCarsData();
         myFrame.addComponentListener(new ComponentAdapter(){
             public void componentResized(ComponentEvent componentEvent){
-                carsData.mainPanel.removeAll();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
-                //carsData.mainPanel.repaint();
             }
         });
 
-        Button[] buttons = new Button[Main.commandEnum.values().length];
+        Button[] buttons = new Button[5];
 
         //Button Creation
-        int i = 0;
-        for(Main.commandEnum x : Main.commandEnum.values()){
-            buttons[i] = (Button) new Button(Main.commandEnum.values()[i].toString());
-            buttonPanel.add(buttons[i]);
-            i++;
+        // 0=help, 1=createCar, 2=printCars, 3=search, 4=delete, 5=edit, 6=SAVE, 7=clear
+        buttons[0] = (Button) new Button("Help");
+        buttons[1] = (Button) new Button("New Car");
+        buttons[2] = (Button) new Button("Search");
+        buttons[3] = (Button) new Button("Delete Car");
+        buttons[4] = (Button) new Button("SAVE");
+        int bi=0;
+        GridBagConstraints bGB = new GridBagConstraints();
+        bGB.weighty = 1;
+        bGB.weightx = 1;
+        bGB.fill = GridBagConstraints.BOTH;
+        for(Button b : buttons){
+            bGB.gridy = bi;
+            buttonPanel.add(b, bGB);
+            bi++;
         }
+        GridBagConstraints bpGB = new GridBagConstraints();
+        bpGB.fill = GridBagConstraints.VERTICAL;
+        bpGB.weighty = 1;
+        bpGB.gridx = 0;
+        bpGB.anchor = GridBagConstraints.LINE_START;
+        myFrame.add(buttonPanel, bpGB);
+
         //GUI's
         Frame helpFrame = new Frame();
         Frame createFrame = new Frame();
@@ -110,7 +126,6 @@ public class uiMain{
                 currentActionID = 1;
                 currentAttributeIndex = 0;
                 currentAttributeValue = searchByCarIdField.getText();
-                carsData.mainPanel.removeAll();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
             }
@@ -121,7 +136,6 @@ public class uiMain{
                 currentActionID = 1;
                 currentAttributeIndex = 1;
                 currentAttributeValue = searchByBrandField.getText();
-                carsData.mainPanel.removeAll();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
             }
@@ -132,7 +146,6 @@ public class uiMain{
                 currentActionID = 1;
                 currentAttributeIndex = 2;
                 currentAttributeValue = searchByEngineSizeField.getText();
-                carsData.mainPanel.removeAll();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
             }
@@ -143,7 +156,6 @@ public class uiMain{
                 currentActionID = 1;
                 currentAttributeIndex = 3;
                 currentAttributeValue = searchByModelField.getText();
-                carsData.mainPanel.removeAll();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
             }
@@ -154,7 +166,6 @@ public class uiMain{
                 currentActionID = 1;
                 currentAttributeIndex = 4;
                 currentAttributeValue = searchByColourField.getText();
-                carsData.mainPanel.removeAll();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
             }
@@ -165,7 +176,6 @@ public class uiMain{
                 currentActionID = 5;
                 currentAttributeIndex = 0;
                 currentAttributeValue = searchByYearField.getText();
-                carsData.mainPanel.removeAll();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
             }
@@ -176,7 +186,7 @@ public class uiMain{
                 currentActionID = 1;
                 currentAttributeIndex = 6;
                 currentAttributeValue = searchByPriceField.getText();
-                carsData.mainPanel.removeAll();
+                currentAttributeValue = searchByPriceField.getText();
                 carsData.carsData(currentActionID, currentAttributeIndex, currentAttributeValue);
                 carsData.mainPanel.validate();
             }
@@ -211,43 +221,55 @@ public class uiMain{
         buttons[2].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                for (CarClass x : cars) {
-                    x.printcontents();
-                }
+                searchFrame.setVisible(true);
             }
         });
         buttons[3].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                searchFrame.setVisible(true);
+                delete.Delete();
             }
         });
         buttons[4].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                delete.Delete();
-            }
-        });
-        buttons[5].addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                edit.Edit();
-            }
-        });
-        buttons[6].addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
+                for(int ii = 0; ii < cars.size(); ii++){
+                    Panel att = (Panel)carsData.tablePanelList.get(ii);
+                    if (!String.valueOf(cars.get(ii).carID).equals(((TextField)att.getComponent(0)).getText())){
+                        System.out.print("notSame carID");
+                        cars.get(ii).carID = Integer.parseInt(((TextField)att.getComponent(0)).getText());
+                    }
+                    if (!String.valueOf(cars.get(ii).brand).equals(((TextField)att.getComponent(1)).getText())){
+                        System.out.print("notSame brand");
+                        cars.get(ii).brand = ((TextField)att.getComponent(1)).getText();
+                    }
+                    if (!String.valueOf(cars.get(ii).enginesize).equals(((TextField)att.getComponent(2)).getText())){
+                        System.out.print("notSame enginesize");
+                        cars.get(ii).enginesize = Integer.parseInt(((TextField)att.getComponent(2)).getText());
+                    }
+                    if (!String.valueOf(cars.get(ii).model).equals(((TextField)att.getComponent(3)).getText())){
+                        System.out.print("notSame Model");
+                        cars.get(ii).model = ((TextField)att.getComponent(3)).getText();
+                    }
+                    if (!String.valueOf(cars.get(ii).colour).equals(((TextField)att.getComponent(4)).getText())){
+                        System.out.print("notSame Colour");
+                        cars.get(ii).colour = ((TextField)att.getComponent(4)).getText();
+                    }
+                    if (!String.valueOf(cars.get(ii).year).equals(((TextField)att.getComponent(5)).getText())){
+                        System.out.print("notSame year");
+                        cars.get(ii).year = Integer.parseInt(((TextField)att.getComponent(5)).getText());
+                    }
+                    if (!String.valueOf(cars.get(ii).price).equals(((TextField)att.getComponent(6)).getText())){
+                        System.out.print("notSame price");
+                        cars.get(ii).price = Double.parseDouble(((TextField)att.getComponent(6)).getText());
+                    }
+
+                    System.out.println();
+                }
                 save.save();
-            }
-        });
-        buttons[7].addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                System.out.println("\033[H\033[2J");
             }
         });
         //--------------------------------------------
         myFrame.setVisible(true);
-
     }
 }
