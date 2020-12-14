@@ -26,7 +26,7 @@ public class CarClass implements Externalizable{
     //static int carIDnum = 0; 
     
     //to be used by other classes for listing CarClass attributes.
-    //DO NOT REARANGE THIS, IT WILL MESS UP carsData AND POSSIBLY MORE, APPENDING IS ALLOWED THOUGH
+    //DO NOT REARANGE THIS, IT WILL MESS UP carsTable AND POSSIBLY MORE, APPENDING IS ALLOWED THOUGH
     public static enum attributelist{
         carID, brand, enginesize, model, colour, year, price;
     }

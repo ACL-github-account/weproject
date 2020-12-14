@@ -9,12 +9,11 @@ import weproject.*;
 import weproject.commands.*;
 import java.util.ArrayList;
 
-public class carsData {
+public class carsTable {
     public static Panel mainPanel = (Panel) new Panel(new GridBagLayout());
     public static GridBagConstraints mainPanelConstraint = new GridBagConstraints();
     public static ArrayList tablePanelList = new ArrayList<Panel>();
-
-    //if set to false dont load data from the cars array to the fields upon execution of carsData.
+    //if set to false dont load data from the cars array to the fields upon execution of carsTable.
     public static boolean _LOAD_TO_FIELD = true;
 
 
@@ -96,7 +95,9 @@ public class carsData {
 
         for(int ii=0 ; ii<_ROW_COUNT; ii++) {
             CarClass x;
+            System.out.println(Main.cars.size());
             if (Main.cars.size() > ii) {
+                //System.out.println(Main.cars.size());
                 x = Main.cars.get(ii);
                 if (actionID == 1) {
                     boolean skipPanel = false;
@@ -177,6 +178,7 @@ public class carsData {
                     switch (y) {
                         case brand:
                             panelText = (TextField) panelAtRow.getComponent(CarClass.attributelist.brand.ordinal());
+                            //System.out.println("brand, " + x.brand);
                             panelText.setText(x.brand);
                             break;
                         case carID:
