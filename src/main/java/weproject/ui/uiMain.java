@@ -41,7 +41,7 @@ public class uiMain {
     public static Frame myFrame = new Frame("CarsDatabase");
     public static void GUI(){
         myFrame.setMinimumSize(new Dimension(450,350));
-        myFrame.setLayout(new GridBagLayout());
+        myFrame.setLayout(new BorderLayout());
         myFrame.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
                 System.exit(0);
@@ -55,11 +55,6 @@ public class uiMain {
         Panel buttonPanel = new Panel(new GridBagLayout());
         buttonPanel.setBackground(Color.gray);
         GridBagConstraints buttonsConstraint = new GridBagConstraints();
-        buttonsConstraint.fill = GridBagConstraints.VERTICAL;
-        buttonsConstraint.anchor = GridBagConstraints.LINE_START;
-        buttonsConstraint.ipady = buttonPanel.getSize().height;
-        buttonsConstraint.weighty = 1;
-        myFrame.add(buttonPanel, buttonsConstraint);
 
 
         //main pannel
@@ -97,7 +92,7 @@ public class uiMain {
         bpGB.weighty = 1;
         bpGB.gridx = 0;
         bpGB.anchor = GridBagConstraints.LINE_START;
-        myFrame.add(buttonPanel, bpGB);
+        myFrame.add(buttonPanel, BorderLayout.WEST);
 
         //GUI's
         Frame helpFrame = new Frame();

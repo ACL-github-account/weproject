@@ -48,13 +48,6 @@ public class carsTable {
     }
     public static void carsData(int actionID,int attributeIndex, String attributeValue) throws IndexOutOfBoundsException{
         //Main Pannel
-        mainPanel.setBackground(Color.BLACK);
-        mainPanelConstraint.weightx = 1;
-        mainPanelConstraint.weighty = 1;
-        mainPanelConstraint.gridy = 0;
-        mainPanelConstraint.anchor = GridBagConstraints.ABOVE_BASELINE;
-        mainPanelConstraint.fill = GridBagConstraints.BOTH;
-
         contentConstraint = new GridBagConstraints();
         contentConstraint.gridy = 1;
         contentConstraint.weighty = 1;
@@ -213,6 +206,6 @@ public class carsTable {
             }
         }
         mainPanel.add(mainPanelContent, contentConstraint);
-        myFrame.add(mainPanel, mainPanelConstraint);
+        myFrame.add(mainPanel, BorderLayout.CENTER);
     }
 }
